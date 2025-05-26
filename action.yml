@@ -2,8 +2,6 @@
 name: 'TD TOX Building Automation'
 description: 'A GitHub Action that runs TouchDesigner TOX building automations'
 inputs:
-  
-inputs:
   build_settings:
     description: 'Path to the buildSettings.json file for the project'
     required: true
@@ -16,14 +14,7 @@ runs:
       uses: actions/setup-python@v5
       with:
         python-version: '3.11'  
-    - name: Install Dependencies
-      run: pip install -r requirements.txt
-      shell: bash
-    - name: Pass Inputs to Shell
-      run: |
-              echo "INPUT_NUM=${{ inputs.num }}" >> $GITHUB_ENV
-      shell: bash
     - name: Fetch the number's square
-      id: get-square
-      run: python src/get_num_square.py
+      id: run-and-build-tox
+      run: python src/tox_builder.py
       shell: bash

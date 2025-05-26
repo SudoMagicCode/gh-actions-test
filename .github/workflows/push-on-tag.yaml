@@ -15,7 +15,7 @@ jobs:
           fetch-tags: true
           submodules: true 
 
-      - name: Start Python Runner
+      - name: Python TD Builder
         uses: ./
         with:
           build_settings: ./buildSettings.json

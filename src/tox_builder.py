@@ -8,19 +8,14 @@ import td_builder
 
 artifact_dir_name = "artifacts"
 targets_dir_name = "targets"
-dist_info_name = "dist_info.json"
-build_settings_file = "buildSettings.json"
 
 dist_info: dict = {}
 
 
-def build_tox():
+def build_tox_package(build_settings: td_builder.build_settings.settings):
     '''
     '''
-    print('> creating release...')
-
-    build_settings = td_builder.build_settings.settings()
-    build_settings.load_from_json(build_settings_file)
+    print('> building tox package...')
 
     # Verify dist directory exists
     dist_dir = f"{build_settings.dest_dir}/"
@@ -40,6 +35,11 @@ def build_tox():
     # set up env vars
     td_builder.env_var_utils.set_env_vars(
         build_settings=build_settings.env_vars, dist_info=dist_info.asDict)
+
+    # fetch TDM dependencies
+    if build_settings.use_tdm:
+        print("--> Fetch TDM elements")
+        subprocess.call(['tdm', 'install'], cwd="./TouchDesigner/")
 
     # run td project
     print("--> Starting TouchDesigner")
@@ -58,13 +58,10 @@ def build_tox():
         build_settings=build_settings.env_vars)
 
 
-def build_inventory():
+def build_inventory(build_settings: td_builder.build_settings.settings):
     '''
     '''
-    print('> creating release...')
-
-    build_settings = td_builder.build_settings.settings()
-    build_settings.load_from_json(build_settings_file)
+    print('> building tox inventory...')
 
     # Verify dist directory exists
     dist_dir = f"{build_settings.dest_dir}/"
@@ -85,9 +82,10 @@ def build_inventory():
     td_builder.env_var_utils.set_env_vars(
         build_settings=build_settings.env_vars, dist_info=dist_info.asDict)
 
-    # run td project
-    print("--> Fetch TDM elements")
-    subprocess.call(['tdm', 'install'], cwd="./TouchDesigner/")
+    # fetch TDM dependencies
+    if build_settings.use_tdm:
+        print("--> Fetch TDM elements")
+        subprocess.call(['tdm', 'install'], cwd="./TouchDesigner/")
 
     # run td project
     print("--> Starting TouchDesigner")
@@ -103,13 +101,21 @@ def build_inventory():
 
 
 def main():
-    print("Starting up")
-    print("args received")
+    print('> creating release...')
+    print('> checking buildSettings.json ...')
     settings_file_path: str = sys.argv[1]
+    build_settings = td_builder.build_settings.settings()
+    build_settings.load_from_json(settings_file_path)
 
-    with open(settings_file_path, "r") as json_file:
-        settings_dict: dict = json.loads(json_file.read())
-        print(settings_dict)
+    match build_settings.build_contents:
+        case td_builder.tox_build_contents.tox_build_contents.packageZip:
+            build_tox_package(build_settings=build_settings)
+
+        case td_builder.tox_build_contents.tox_build_contents.toxFiles:
+            build_inventory(build_settings=build_settings)
+        case _:
+            print("Missing build contents should be : packageZip or toxFiles")
+            exit()
 
 
 if __name__ == "__main__":

@@ -105,7 +105,7 @@ def main():
     print("Starting up")
     print("args received")
     inputs = sys.argv[0]
-    print(f"input is {input}")
+    print(f"input is {inputs}")
 
 
 if __name__ == "__main__":

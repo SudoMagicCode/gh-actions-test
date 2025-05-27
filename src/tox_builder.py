@@ -102,8 +102,10 @@ def build_inventory():
 
 
 def main():
+    print("Starting up")
+    print("args received")
     inputs = sys.argv[0]
-    print(inputs)
+    print(f"input is {input}")
 
 
 if __name__ == "__main__":

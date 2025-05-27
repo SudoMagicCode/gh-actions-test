@@ -104,7 +104,7 @@ def build_inventory():
 def main():
     print("Starting up")
     print("args received")
-    inputs = sys.argv[0]
+    inputs = sys.argv[1]
     print(f"input is {inputs}")
 
 

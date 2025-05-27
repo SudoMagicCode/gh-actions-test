@@ -102,7 +102,7 @@ def build_inventory():
 
 
 def main():
-    inputs = sys.argv[1]
+    inputs = sys.argv[0]
     print(inputs)
 
 

@@ -10,6 +10,12 @@ inputs:
 runs:
   using: 'composite'
   steps:
+    - name: allow powershell remote access...
+      shell: cmd
+      run: powershell -Command "Set-ExecutionPolicy RemoteSigned -Scope CurrentUser"
+    - name: check powershell version
+      run: $host.Version
+
     - name: Install Python
       uses: actions/setup-python@v3
       with:

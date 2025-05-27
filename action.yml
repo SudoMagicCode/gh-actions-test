@@ -14,7 +14,7 @@ runs:
       uses: actions/setup-python@v3
       with:
         python-version: '3.11'  
-    - name: Fetch the number's square
+
+    - name: Run TOX Building
       id: run-and-build-tox
       run: python src/tox_builder.py
-      shell: bash

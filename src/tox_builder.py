@@ -1,3 +1,4 @@
+import json
 import subprocess
 import os
 import shutil
@@ -104,8 +105,11 @@ def build_inventory():
 def main():
     print("Starting up")
     print("args received")
-    inputs = sys.argv[1]
-    print(f"input is {inputs}")
+    settings_file_path: str = sys.argv[1]
+
+    with open(settings_file_path, "r") as json_file:
+        settings_dict: dict = json.loads(json_file.read())
+        print(settings_dict)
 
 
 if __name__ == "__main__":

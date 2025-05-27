@@ -14,12 +14,11 @@ jobs:
           fetch-depth: 0
           fetch-tags: true
           submodules: true 
-          
+
       - name: Python TD Builder
         uses: ./
         with:
           build_settings: ./buildSettings.json
-
 
       - name: Release
         uses: softprops/action-gh-release@v2

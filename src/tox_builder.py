@@ -31,7 +31,7 @@ def build_tox():
     print("> Starting deploy process...")
 
     print("-> Finding Version Info...")
-    dist_info = td_builder.distInfo()
+    dist_info = td_builder.distInfo.distInfo()
 
     print(
         f"--> Creating build {dist_info.major}.{dist_info.minor}.{dist_info.patch}")
@@ -75,7 +75,7 @@ def build_inventory():
     print("> Starting deploy process...")
 
     print("-> Finding Version Info...")
-    dist_info = td_builder.distInfo()
+    dist_info = td_builder.distInfo.distInfo()
 
     print(
         f"--> Creating build {dist_info.major}.{dist_info.minor}.{dist_info.patch}")

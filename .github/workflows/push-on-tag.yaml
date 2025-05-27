@@ -15,6 +15,12 @@ jobs:
           fetch-tags: true
           submodules: true 
 
+      - name: allow powershell remote access...
+        shell: cmd
+        run: powershell -Command "Set-ExecutionPolicy RemoteSigned -Scope CurrentUser"
+      - name: check powershell version
+        run: $host.Version
+
       - name: Python TD Builder
         uses: ./
         with:
